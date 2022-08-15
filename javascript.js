@@ -45,10 +45,11 @@ function game(){
     let playerScore = 0;
 
     for (let i = 0; i < 5; i++){
-        let playerChoice = prompt("Schnick, Schnack ..., Schnuck!").toLowerCase();
+        let playerChoice = prompt("Schnick, Schnack ..., Schnuck!").toLowerCase().trim();
+        
         if(playerChoice === "rock" || playerChoice === "paper" || playerChoice ==="scissors"){
             const result = play(getComputerChoice(), playerChoice);
-            console.log(result);
+            console.log(`Round #${i + 1}: ` + result);
         
             if(result.includes("You win!")){
                 playerScore++;
@@ -61,7 +62,7 @@ function game(){
         } else {
             alert("Please choose either rock, paper or scissors!")
             i--;
-            
+
         }
     }
 
