@@ -15,7 +15,8 @@ function getComputerChoice(){
 const display = document.querySelector('#display');
 const score = document.querySelector('#score');
 
-
+let playerScore = 0;
+let computerScore = 0;
 
 function play(computerSelection, playerSelection){
     if(computerSelection === playerSelection){
@@ -39,100 +40,58 @@ function play(computerSelection, playerSelection){
     } else if(computerSelection === "scissors" && playerSelection === "paper") {
         display.textContent = "You loose! scissors beats paper";
     }
-    return display.textContent;
+
+    if(display.textContent.includes("You win!")){
+        playerScore++;
+
+    } else if(display.textContent.includes("You loose!")){
+        computerScore++;
+
+    }
+    score.textContent = `Computer: ${computerScore} vs. Player: ${playerScore}`;
+    decideMatch(computerScore, playerScore);
 }
 
 const btnRock = document.querySelector('#rock');
 const btnPaper = document.querySelector('#paper');
 const btnScissors = document.querySelector('#scissors');
 
-let playerScore = 0;
-let computerScore = 0;
+
+btnRock.addEventListener('click', playRock);
+
+function playRock(){
+    play(getComputerChoice(), 'rock');
+}
 
 
+btnPaper.addEventListener('click', playPaper);
+
+function playPaper(){
+    play(getComputerChoice(), 'paper');
+}
 
 
-btnRock.addEventListener('click', () => {
-    let result = play(getComputerChoice(), 'rock');
-    if(result.includes("You win!")){
-        playerScore++;
+btnScissors.addEventListener('click', playScissors);
 
-    } else if(result.includes("You loose!")){
-        computerScore++;
+function playScissors(){
+    play(getComputerChoice(), 'scissors');
+}
 
-    }
-    score.textContent = `Computer: ${computerScore} vs. Player: ${playerScore}`;
 
-    if(playerScore === 5 || computerScore === 5){
+function decideMatch(computerScore, playerScore){
+    if(playerScore >= 5 || computerScore >= 5){
         if(computerScore > playerScore){
             display.textContent = `You loose! ${computerScore} to ${playerScore}`;
     
         } else {
             display.textContent = `Hurray! You win! ${playerScore} to ${computerScore}`;
-        } 
-    }
-});
-
-    
-
-btnPaper.addEventListener('click', ()=>{
-    let result = play(getComputerChoice(), 'paper');
-    if(result.includes("You win!")){
-        playerScore++;
-
-    } else if(result.includes("You loose!")){
-        computerScore++;
-
-    }
-    score.textContent = `Computer: ${computerScore} vs. Player: ${playerScore}`;
-
-    if(playerScore === 5 || computerScore === 5){
-        if(computerScore > playerScore){
-            display.textContent = `You loose! ${computerScore} to ${playerScore}`;
-    
-        } else {
-            display.textContent = `Hurray! You win! ${playerScore} to ${computerScore}`;
-        } 
-    }
-});
-
-btnScissors.addEventListener('click', () => {
-    let result = play(getComputerChoice(), 'scissors')
-    if(result.includes("You win!")){
-        playerScore++;
-
-    } else if(result.includes("You loose!")){
-        computerScore++;
-
-    }
-    score.textContent = `Computer: ${computerScore} vs. Player: ${playerScore}`;
-
-    if(playerScore === 5 || computerScore === 5){
-        if(computerScore > playerScore){
-            display.textContent = `You loose! ${computerScore} to ${playerScore}`;
-    
-        } else {
-            display.textContent = `Hurray! You win! ${playerScore} to ${computerScore}`;
-        } 
-    }
-});
-
-
-
-/* function game(){
-
-
-    for (let i = 0; i < 5; i++){
-        let playerChoice = prompt("Schnick, Schnack ..., Schnuck!").toLowerCase().trim();
-        
-        else {
-            alert("Please choose either rock, paper or scissors!")
-            i--;
-
         }
+
+        btnRock.removeEventListener('click', playRock);
+        btnPaper.removeEventListener('click', playPaper);
+        btnScissors.removeEventListener('click', playScissors);
+
     }
 
 
 }
-
-game(); */
